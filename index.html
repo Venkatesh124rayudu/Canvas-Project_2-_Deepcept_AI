@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+        <title>Generative AI | Image</title>
+        <script src="https://ajax.  googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="style1.css">
+        <style>
+            #loadingIndicator {
+                /* Add your styling for the loading indicator here */
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid #ccc;
+                padding: 10px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+            }
+    
+            #imageDisplay {
+                /* Add your styling for the image display area here */
+                display: none;
+                text-align: center;
+                margin-top: 20px;
+            }
+    
+            #generatedImage {
+                  /* Add your styling for the generated image here */
+                max-width: 100%;
+                max-height: 400px;
+            } 
+    
+            .image-options {
+                display: flex;
+                align-items: center;
+            }
+    
+        .image-option {
+            display: block; /* Display as block elements */
+            text-align: center;
+            margin-bottom: 10px; /* Adjust margin between images */
+        }
+        </style>
+    </head>
+<body>
+<div>
+    <div id="Generate">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show my-0" role="alert">
+            <strong><li>{{ message }}</li></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        {% endfor %}
+        {% endif %}
+        <h1 class="Heading">Generate OR Upload Image</h1>
+        <div class="container">
+    <div id="container1">
+            <fieldset style="border-radius: 0px 8px 8px 8px;">
+            <form action="/" method="post">
+            
+            <legend id="Generate_legend" onclick="toggleContent('Generate',this)">Generate Image</legend>
+            <legend id="legend" onclick="toggleContent('Upload',this)">Upload Image</legend>
+                <!-- child div -->
+                <div id="Generate_content">
+                    {% csrf_token %}
+                    <div class="model_container" id="model_container">
+                        <div class="for_parent_model">
+                            <div class="for_model" id="for_model">
+                                <div>
+                                    <label for="model">Select the model</label>
+                                </div>
+                                <select class="text model" name="model_selection" id="model" required >
+                                    <option value="FFHQ">FFHQ</option>
+                                    <option value="MetFaces">MetFaces</option>
+                                </select>
+                        </div>
+                            <div class="for_model" id="for_text">
+                                <div>
+                                    <label for="text">Description Text</label>
+                                </div>
+                                <input class="text" type="text" placeholder="Add description here" name="model_description" required>
+                            </div>
+                        </div>
+                        <!-- child div -->
+                        <div class="for_parent_model" >
+                            <button class="for_model Generate_button" type="submit" name="generate_image_form">Submit</button>
+                        </div>
+                    </div>
+                    
+                    <!-- child div -->
+                    <div id="imageDisplay">
+                        <img id="generatedImage" src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jp" alt="Generated Image">
+                    </div>
+                </div>
+            </form>
+            <form action="/" method="post" enctype="multipart/form-data">
+                
+                    <div id="Upload_content">
+                        {% csrf_token %}
+                        <div class="for_model for_parent_model drag_and_drop">
+                            <label for="input-file" id="drop-area">
+                                <input type="file" accept="image/*" id="input-file" hidden>
+                                <div id="img-view">
+                                    <img class="image" src="upload.svg">
+                                        <p style="font-size: large;">Drag And Drop or Click Here</p>
+                                        <p>To Upload Image</p>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="for_parent_model" >
+                            <button class="for_model Generate_button" type="submit" name="upload_image_form">Submit</button>
+                        </div>
+                    </div>
+                    
+                </form>
+                <div class="button_style">
+                    <button class="canvas_button " type="submit"><a href="/" style="text-decoration: none; color: black;">Previous</a></button>
+                    <button class="canvas_button" type="submit" name="upload_image_form">Submit</button>
+                    
+                </div>
+                
+        </fieldset>
+        </div>
+        <!-- IMAGE OPTION -->
+        <fieldset id="fieldset">
+            <h2>Image Options</h2>
+    <div class="image-options">
+        {% for image in image_files %}
+            <div class="image-option" data-image-url="media/images/{{ image.name }}" data-image-name="{{ image.name }}">
+                <img src="media/images/{{ image.name }}" alt="{{ image.name }}" style="width:150px">
+                <p>{{ image.name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+            <div >
+                <div class="model_container">
+                    <div class="for_parent_model">
+                        <div class="for_model" >
+            
+    <form action="/" id="selectedImageForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Select Image</h3>
+        <!-- source code -->
+        <div>
+            <label for="selectedImage">Select Image:</label>
+        </div>
+        <select class="text model" name="selected_image" id="selectedImage" required >
+            <option value="" disabled selected>Select an image</option>
+            {% for image in image_files %}
+                <option value="media/images/{{ image.name }}">{{ image.name }}</option>
+            {% endfor %}
+        </select>
+        <!-- source code  -->
+        <div class="for_parent_model" >
+            <button class="for_model Generate_button" type="submit" name="select_image_form">Submit</button>
+        </div>
+    </form>
+            </div>
+            </div>
+            </div>
+            </div>
+        </fieldset>
+        
+    </div>
+    
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#generateImageForm').submit(function(event) {
+                // Prevent default form submission
+                event.preventDefault();
+                
+                // For loading indicator
+                $('#loadingIndicator').show();
+                
+                // Sending AJAX request to start image generation
+                $.ajax({
+                    type: 'post',
+                    url: '/',  // Update URL to the correct endpoint for generating images
+                    data: {
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(), // Include CSRF token
+                        model_selection: $('#modelSelection').val(),
+                        model_description: $('#modelDescription').val()
+                    },
+                    success: function(response) {
+                        // Hiding loading indicator
+                        $('#loadingIndicator').hide();
+                        // Displaying generated image
+                        $('#generatedImage').attr('src', response.image_url);
+                        $('#imageDisplay').show();
+                    },
+                    error: function(xhr, status, error) {
+                        // Hiding loading indicator
+                        $('#loadingIndicator').hide();
+                        // Handling errors
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="upload.js"></script>
+<script src="Legends.js"></script>
+</div>
+</body>
+</html>

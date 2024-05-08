@@ -1,0 +1,253 @@
+body{
+    background-color: #E1E5EE;
+    color: black;
+    font-family: sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    margin: 0;
+}
+.Heading{
+    padding-bottom: 20px;
+}
+
+#Generate_legend:active{
+    background-color: #424c5a;
+}
+#Generate_legend:hover{
+    cursor: pointer;
+}
+#Generate_legend:focus{
+    color: black ;
+}
+#legend:active{
+    background-color:#424c5a;
+}
+#legend:hover{
+    cursor: pointer;
+}
+
+#Audio{
+    position:static;
+}
+.for_model{
+    border:1px solid #687385;
+    box-shadow :1px 1px 1px #687385;
+    background-color: #C6CFDC;
+    padding: 15px;
+    color: black ;
+    border-radius: 8px;
+}
+
+#for_model{
+    border-radius: 8px 8px 0px 0px;
+}
+#for_text{
+    border-radius: 0px 0px 8px 8px;
+}
+.next{
+    border-radius: 0px;
+}
+.last{
+    border-radius: 0px 0px 8px 8px;
+}
+.Generate_button{
+    background-color: #687385;
+    border-radius: 8px;
+    width: 100%;
+    height: 45px;
+    color:black;
+    font-weight: bold;
+    box-shadow:1px 1px 1px #687385; 
+    border:solid 1px #687385;
+    transition: all  0.2s linear;
+}
+.Generate_button:hover{
+    background-color:#9da4af ;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: all  0.2s linear;
+    cursor: pointer;
+}
+.for_parent_model{
+    margin: 15px;
+    border-radius: 8px;
+}
+.Inner_form{
+    height: 200px;
+}
+.text {
+    box-shadow :1px 1px 1px #687385 ;
+    border:1px solid #687385;
+    outline: none;
+    color: black;
+    background-color:#C6CFDC; 
+    border-radius: 8px;
+    height: 45px;
+    font-size: 18px;
+    width: 98.5%;
+    padding-left:20px;
+    margin:10px 0;/* Optionally make the background transparent */
+    /* Add more styling as needed */
+}
+fieldset {
+    border-radius: 8px 8px 8px 8px ; /* Adjust the value as per your preference */
+    border: 2px solid #687385; /* Add border for better visibility */
+    padding: 10px;
+    position: relative;/* Add paddinśg for better appearance */
+}
+
+legend {
+    position: absolute; /* Adjust the value as per your preference */ /* Add background color if desired */
+    padding: 3.5px 10px; /* Add padding for better appearance */
+    border: 2px solid #687385;
+    top:-30px;
+    left:-1px;
+    border-radius:4px 4px 0px 0px;  /* Add border for better visibility */
+}
+#legend{
+    left:136.4px;
+}
+#fieldset{
+    margin-top: 40px;
+}
+
+.text_id{
+    box-shadow: none;
+    border: none;
+    height: 10px;
+}
+#for_select{
+    border-radius:8px 8px 0px 0px; 
+}
+#for_Stability{
+    border-radius: 0px;
+}
+#for_Boost{
+    border-radius: 0px;
+}
+#for_Style{
+    border-radius: 0px 0px 8px 8px;
+}
+.container{
+    position: relative;
+}
+#container2{
+    position: absolute;
+    top: 0px;
+    left:0px;
+    width: 100%;
+    /* display: none; */
+}
+#Upload_content {
+    display: none;
+}
+
+.span{
+    text-align: right;
+}
+span{
+    padding: 5px 10px;
+    border: 2px solid#687385;
+    border-radius: 8px;
+}
+.canvas_button{
+    border-radius: 4px;
+    background-color: #687385;
+    color:black;
+    height: 45px;
+    padding: 10px;
+    font-weight: bold;
+    box-shadow:1px 1px 1px #687385; 
+    border:solid 1px #687385;
+}
+.canvas_button:hover{
+    background-color:#9da4af ;
+    transition: all  0.2s linear;
+    cursor: pointer;
+}
+
+.buttons {
+    display: flex;
+    gap: 40px; /* Adjust the value as needed */
+}
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .canvas_button {
+    flex: 1 1 calc(25% - 10px); /* Adjust the percentage value as needed */
+    margin: 5px;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 767px) {
+    .canvas_button {
+      flex: 1 1 calc(50% - 10px); /* Adjust the percentage value as needed */
+    }
+  }
+  
+  /* Media query for even smaller screens */
+  @media (max-width: 480px) {
+    .canvas_button {
+      flex: 1 1 100%;
+    }
+  }
+.next{
+    border-radius: 0px;
+}
+.model{
+    width: 100%;
+}
+.model:hover{
+    cursor: pointer;
+}
+
+/* .image{
+    width: 400px;
+    height: 300px;
+} */
+.drag_and_drop{
+    /* width: 100%;
+    min-height: 100vh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+#drop-area{
+    width: 500px;
+    height: 300px;
+    padding: 30px;
+    text-align: center;
+}
+#img-view{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 2px dashed black;
+    background-position: center ;
+    background-size: cover;
+}
+#img-view img{
+    width:100px;
+    margin-top: 25px;
+    margin-top: 15px;
+}
+
+/* .para{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+} */
+.button_style{
+    display: flex;
+    justify-content: center;
+    gap:100px;
+    padding-left: 400px;
+    padding-right: 400px;
+}
+
+.range:hover{
+    cursor: pointer;
+}
